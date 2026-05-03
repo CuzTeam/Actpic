@@ -1,0 +1,8 @@
+node_modules
+dist
+.vercel
+*.tsbuildinfo
+
+.vercel
+Actpic.zip
+.trae/
