@@ -19,7 +19,7 @@ export interface FetchOptions {
 }
 
 export type FetchError = {
-  type: 'repository_not_found' | 'workflow_not_found' | 'rate_limited' | 'fetch_failed';
+  type: 'repository_not_found' | 'workflow_not_found' | 'rate_limited' | 'fetch_failed' | 'render_failed';
   message: string;
 };
 

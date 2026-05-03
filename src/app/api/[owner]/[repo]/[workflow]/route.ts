@@ -43,9 +43,11 @@ export async function GET(
         'Cache-Control': 'public, s-maxage=300, stale-while-revalidate=600',
       },
     });
-  } catch {
+  } catch (renderError) {
+    console.error('[ActPic] renderSpec failed:', renderError);
+
     const errorSpec = buildErrorSpec(
-      { type: 'fetch_failed', message: 'Failed to render SVG' },
+      { type: 'render_failed', message: 'Failed to render SVG' },
       { owner, repo, workflow, theme, width, height },
     );
 
@@ -58,7 +60,9 @@ export async function GET(
           'Cache-Control': 'public, s-maxage=60, stale-while-revalidate=120',
         },
       });
-    } catch {
+    } catch (errorRenderError) {
+      console.error('[ActPic] Error spec render also failed:', errorRenderError);
+
       const fallbackSvg = `<svg xmlns="http://www.w3.org/2000/svg" width="${width}" height="200"><rect width="${width}" height="200" fill="${theme.background}" rx="8"/><text x="${width / 2}" y="100" text-anchor="middle" fill="${theme.failure}" font-size="16">Failed to render SVG</text></svg>`;
       return new NextResponse(fallbackSvg, {
         status: 200,
