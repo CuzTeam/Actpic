@@ -1,5 +1,5 @@
-import type { WorkflowRun, FetchError } from './github.js';
-import type { Theme } from './theme.js';
+import type { WorkflowRun, FetchError } from './github';
+import type { Theme } from './theme';
 
 export interface SpecOptions {
   owner: string;
@@ -62,7 +62,7 @@ export function calcAutoHeight(runCount: number): number {
 
 export function buildWorkflowSpec(runs: WorkflowRun[], options: SpecOptions) {
   const { owner, repo, workflow, theme, width = 800, height } = options;
-  const elements: Record<string, any> = {};
+  const elements: Record<string, Record<string, unknown>> = {};
 
   const subtitle = workflow === 'all' ? 'All Workflows' : workflow;
   const showWorkflowName = workflow === 'all';
@@ -406,7 +406,7 @@ export function buildWorkflowSpec(runs: WorkflowRun[], options: SpecOptions) {
     };
   }
 
-  const successCount = runs.filter(r => r.conclusion === 'success').length;
+  const successCount = runs.filter((r) => r.conclusion === 'success').length;
   const successRate = runs.length > 0 ? Math.round((successCount / runs.length) * 100) : 0;
   const rateColor =
     successRate >= 80 ? theme.success : successRate >= 50 ? theme.pending : theme.failure;
@@ -481,7 +481,7 @@ export function buildWorkflowSpec(runs: WorkflowRun[], options: SpecOptions) {
 export function buildErrorSpec(error: FetchError, options: SpecOptions) {
   const { owner, repo, theme, width = 800 } = options;
 
-  const elements: Record<string, any> = {};
+  const elements: Record<string, Record<string, unknown>> = {};
 
   elements['frame'] = {
     type: 'Frame',
